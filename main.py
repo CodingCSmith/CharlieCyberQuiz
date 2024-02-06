@@ -54,8 +54,11 @@ def check_answer(choice):
     for button in choice_btns:
         button.config(state="disabled")
 
-    # Schedule the next question after 4 seconds
-    root.after(4000, next_question_auto)
+    # Schedule the next question after a delay
+    root.after(5000, next_question_auto)
+
+    # Disable the keyboard input during the cooldown
+    root.unbind("<Key>")
 
 
 # Function to move to the next question automatically
@@ -73,6 +76,20 @@ def next_question_auto():
             "Quiz Completed! Final score: {}/{}".format(score, len(quiz_data)),
         )
         root.destroy()
+
+    # Re-enable the keyboard input after the cooldown
+    root.bind("<Key>", handle_keyboard)
+
+    # Re-enable all choice buttons
+    for button in choice_btns:
+        button.config(state="normal")
+
+
+# Function to handle keyboard input
+def handle_keyboard(event):
+    key = event.char
+    if key in {"1", "2", "3"}:
+        check_answer(int(key) - 1)  # Convert key to index (0-based)
 
 
 # Create the main window
@@ -119,6 +136,9 @@ current_question = 0
 
 # Show the first question
 show_question()
+
+# Bind the keyboard input to the handle_keyboard function
+root.bind("<Key>", handle_keyboard)
 
 # Start the main event loop
 root.mainloop()
