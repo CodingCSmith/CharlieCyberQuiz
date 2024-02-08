@@ -14,68 +14,64 @@ incorrect_sound = pygame.mixer.Sound("Sounds/WompWompWompEffect.mp3")
 
 # Function to display the current question and choices
 def show_question():
-    # Get the current question from the quiz_data list
-    question = quiz_data[current_question]
-    qs_label.config(text=question["question"])
+    global current_question
+    if 0 <= current_question < len(quiz_data):
+        question = quiz_data[current_question]
+        qs_label.config(text=question["question"])
 
-    # Display the choices on the buttons with different colors in a row
-    for i in range(3):
-        choice_btns[i].config(
-            text=question["choices"][i],
-            state="normal",
-            style=question["colors"][i],  # Set the color style
-        )
+        # Display the choices on the buttons with different colors in a row
+        for i in range(3):
+            choice_btns[i].config(
+                text=question["choices"][i],
+                state="normal",
+                style=question["colors"][i],  # Set the color style
+            )
 
-    # Clear the feedback label
-    feedback_label.config(text="")
+        # Clear the feedback label
+        feedback_label.config(text="")
 
-    # Display the score label
-    score_label.config(text="Score: {}/{}".format(score, len(quiz_data)))
+        # Display the score label
+        score_label.config(text="Score: {}/{}".format(score, len(quiz_data)))
+    else:
+        show_final_score()
 
 
 # Function to check the selected answer and provide feedback
 def check_answer(choice):
-    # Get the current question from the quiz_data list
-    question = quiz_data[current_question]
-    selected_choice = choice_btns[choice].cget("text")
+    global current_question
+    if 0 <= current_question < len(quiz_data):
+        question = quiz_data[current_question]
+        selected_choice = choice_btns[choice].cget("text")
 
-    # Check if the selected choice matches the correct answer
-    if selected_choice == question["answer"]:
-        # Update the score and display it
-        global score
-        score += 1
-        feedback_label.config(text="Correct!", foreground="green")
-        correct_sound.play()
+        # Check if the selected choice matches the correct answer
+        if selected_choice == question["answer"]:
+            # Update the score and display it
+            global score
+            score += 1
+            feedback_label.config(text="Correct!", foreground="green")
+            correct_sound.play()
+        else:
+            feedback_label.config(text="Incorrect!", foreground="red")
+            incorrect_sound.play()
+
+        # Disable all choice buttons
+        for button in choice_btns:
+            button.config(state="disabled")
+
+        # Schedule the next question after a delay
+        root.after(4000, next_question_auto)
+
+        # Disable the keyboard input during the cooldown
+        root.unbind("<Key>")
     else:
-        feedback_label.config(text="Incorrect!", foreground="red")
-        incorrect_sound.play()
-
-    # Disable all choice buttons
-    for button in choice_btns:
-        button.config(state="disabled")
-
-    # Schedule the next question after a delay
-    root.after(5000, next_question_auto)
-
-    # Disable the keyboard input during the cooldown
-    root.unbind("<Key>")
+        show_final_score()
 
 
 # Function to move to the next question automatically
 def next_question_auto():
     global current_question
     current_question += 1
-
-    if current_question < len(quiz_data):
-        # If there are more questions, show the next question
-        show_question()
-    else:
-        # If all questions have been answered, display the final score and end the quiz
-        messagebox.showinfo(
-            "Quiz Completed",
-            "Quiz Completed! Final score: {}/{}".format(score, len(quiz_data)),
-        )
-        root.destroy()
+    show_question()
 
     # Re-enable the keyboard input after the cooldown
     root.bind("<Key>", handle_keyboard)
@@ -87,9 +83,40 @@ def next_question_auto():
 
 # Function to handle keyboard input
 def handle_keyboard(event):
-    key = event.char
+    key = event.keysym
     if key in {"1", "2", "3"}:
         check_answer(int(key) - 1)  # Convert key to index (0-based)
+    elif key == "Return":  # Use "Return" (Enter key) to restart the game
+        restart_game()
+
+
+# Function to restart the game
+def restart_game():
+    global score, current_question
+    score = 0
+    current_question = 0
+
+    # Enable all choice buttons
+    for button in choice_btns:
+        button.config(state="normal")
+
+    # Show the first question
+    show_question()
+
+
+# Function to show the final score
+def show_final_score():
+    global score, current_question
+    messagebox.showinfo(
+        "Quiz Completed", "Final score: {}/{}".format(score, len(quiz_data))
+    )
+
+    # Reset score and current_question to restart the quiz
+    score = 0
+    current_question = 0
+
+    # Show the first question
+    show_question()
 
 
 # Create the main window

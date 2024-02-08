@@ -11,7 +11,7 @@ This is a simple quiz application built using Python and Tkinter, designed to te
         "question": "Q1: Enter Your IT/Cyber Question Here?",
         "choices": ["Answer 1", "Answer 2", "Answer 3"],
         "answer": "Correct Answer Here",
-        "colors": ["success.TButton", "info.TButton", "warning.TButton"] // Copy Paste This Line Aswell But Dont Change Them
+        "colors": ["success.TButton", "danger.TButton", "warning.TButton"] // Copy Paste This Line Aswell But Dont Change Them
     },
   ```
 
@@ -67,6 +67,12 @@ pip install tkinter ttkbootstrap pygame
 
 4. Enjoy the sound effects and test your knowledge!
 
+5. PS if it doesnt work on a pie try doing this in the terminal.
+
+```bash
+sudo apt-get install libsdl2-mixer-2.0-0
+```
+
 ## Question Data
 
 The quiz questions and answer choices are stored in the `quiz_data.py` file. Feel free to customize the questions and add more to suit your preferences.
@@ -78,7 +84,7 @@ quiz_data = [
         "question": "Q1: What does URL stand for?",
         "choices": ["Uniform Resource Locator", "Universal Resource Locator", "Ultimate Resource Locator", "Uniform Retrieval Locator"],
         "answer": "Uniform Resource Locator",
-        "colors": ["success.TButton", "info.TButton", "warning.TButton"]
+        "colors": ["success.TButton", "danger.TButton", "warning.TButton"]
     },
 ]
 ```
