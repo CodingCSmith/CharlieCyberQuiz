@@ -1,8 +1,8 @@
 import tkinter as tk
 from tkinter import messagebox, ttk
 from ttkbootstrap import Style
-from quiz_data import quiz_data
 import pygame
+import requests
 
 # Initialize pygame mixer
 pygame.mixer.init()
@@ -10,6 +10,26 @@ pygame.mixer.init()
 # Load audio files
 correct_sound = pygame.mixer.Sound("Sounds/CheeringEffect.mp3")
 incorrect_sound = pygame.mixer.Sound("Sounds/WompWompWompEffect.mp3")
+
+
+def fetch_questions():
+    try:
+        response = requests.get(
+            "https://raw.githubusercontent.com/CodingCSmith/Questions/main/CQuestions.json"
+        )
+        response.raise_for_status()  # Raise an exception for HTTP errors
+
+        # Print the entire content for debugging
+        print("Response content:", response.text)
+
+        return response.json()
+    except requests.RequestException as e:
+        print(f"Error fetching questions: {e}")
+        return []
+
+
+# Fetch questions from the URL and populate quiz_data
+quiz_data = fetch_questions()
 
 
 # Function to display the current question and choices

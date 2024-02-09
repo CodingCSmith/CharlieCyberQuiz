@@ -75,18 +75,4 @@ sudo apt-get install libsdl2-mixer-2.0-0
 
 ## Question Data
 
-The quiz questions and answer choices are stored in the `quiz_data.py` file. Feel free to customize the questions and add more to suit your preferences.
-
-```python
-# quiz_data.py file
-quiz_data = [
-    {
-        "question": "Q1: What does URL stand for?",
-        "choices": ["Uniform Resource Locator", "Universal Resource Locator", "Ultimate Resource Locator", "Uniform Retrieval Locator"],
-        "answer": "Uniform Resource Locator",
-        "colors": ["success.TButton", "danger.TButton", "warning.TButton"]
-    },
-]
-```
-
-Modify the `quiz_data` list to include your own set of questions.
+The quiz questions and answer choices are stored in the [Here](https://raw.githubusercontent.com/CodingCSmith/Questions/main/CQuestions.json). Feel free to customize the questions and add more to suit your preferences.
