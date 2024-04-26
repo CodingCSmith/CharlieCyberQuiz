@@ -14,7 +14,7 @@ incorrect_sound = pygame.mixer.Sound("Sounds/WompWompWompEffect.mp3")
 class QuizApp(tk.Tk):
     def __init__(self):
         super().__init__()
-        self.title("Quiz App")
+        self.title("The Cyber Questionnaire")
         self.geometry("1920x1080")
 
         self.style = Style(theme="darkly")
