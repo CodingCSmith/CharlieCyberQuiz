@@ -1,9 +1,14 @@
 import tkinter as tk
 from tkinter import ttk, messagebox
 from ttkbootstrap import Style
+import pygame
 import requests
 import json
 import os
+
+pygame.mixer.init()
+correct_sound = pygame.mixer.Sound("Sounds/CheeringEffect.mp3")
+incorrect_sound = pygame.mixer.Sound("Sounds/WompWompWompEffect.mp3")
 
 
 class QuizApp(tk.Tk):
@@ -136,8 +141,10 @@ class QuizApp(tk.Tk):
                 self.score += 1
                 self.feedback_label.config(text="Correct!", foreground="green")
                 self.update_score_label()
+                correct_sound.play()
             else:
                 self.feedback_label.config(text="Incorrect!", foreground="red")
+                incorrect_sound.play()
 
             for button in self.choice_btns:
                 button.config(state="disabled")
@@ -158,7 +165,7 @@ class QuizApp(tk.Tk):
             button.config(state="normal")
 
     def restart_game(self):
-        print(f"Error fetching start")
+        messagebox.showerror("Restart", "Error going back to the start of the game.")
 
     def show_result_page(self):
         if self.player_name:
@@ -222,6 +229,7 @@ class QuizApp(tk.Tk):
             self.check_answer(int(key) - 1)
         elif key == "4":
             self.restart_game()
+
 
 if __name__ == "__main__":
     app = QuizApp()
