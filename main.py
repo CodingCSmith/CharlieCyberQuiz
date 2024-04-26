@@ -32,7 +32,9 @@ class QuizApp(tk.Tk):
     def create_widgets(self):
         self.username_frame = ttk.Frame(self)
 
-        name_label = ttk.Label(self.username_frame, text="Enter your name:")
+        name_label = ttk.Label(
+            self.username_frame, text="Enter your name:", anchor="center"
+        )
         name_label.grid(row=0, column=0, padx=10)
 
         self.name_entry = ttk.Entry(self.username_frame, font=("Helvetica", 30))
@@ -165,7 +167,15 @@ class QuizApp(tk.Tk):
             button.config(state="normal")
 
     def restart_game(self):
-        messagebox.showerror("Restart", "Error going back to the start of the game.")
+        self.score = 0
+        self.current_question = 0
+
+        self.result_frame.destroy()
+        self.quiz_frame.destroy()
+
+        self.create_widgets()
+
+        self.show_question()
 
     def show_result_page(self):
         if self.player_name:
@@ -225,9 +235,14 @@ class QuizApp(tk.Tk):
 
     def handle_keyboard(self, event):
         key = event.keysym
-        if key in {"1", "2", "3"}:
-            self.check_answer(int(key) - 1)
-        elif key == "4":
+        print(key)
+        if key == "Left":
+            self.check_answer(0)
+        elif key == "Down":
+            self.check_answer(1)
+        elif key == "Right":
+            self.check_answer(2)
+        elif key == "Up":
             self.restart_game()
 
 

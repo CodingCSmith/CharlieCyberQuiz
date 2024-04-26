@@ -1,1 +1,11 @@
-[{"name": "Callum", "score": 20}, {"name": "Charlie", "score": 1}, {"name": "Kai", "score": 0}, {"name": "Jack", "score": 10}, {"name": "Jordan", "score": 11}, {"name": "MillyBeans", "score": 14}, {"name": "James", "score": 6}, {"name": "Will", "score": 1}]
+[
+  { "name": "Callum", "score": 201 },
+  { "name": "Charlie", "score": 200 },
+  { "name": "JACK", "score": 2 },
+  { "name": "Jordan", "score": 15 },
+  { "name": "Kallum", "score": 14 },
+  { "name": "Harry", "score": 8 },
+  { "name": "Freddie", "score": 11 },
+  { "name": "Joaquin", "score": 14 },
+  { "name": "Kai", "score": 0 }
+]

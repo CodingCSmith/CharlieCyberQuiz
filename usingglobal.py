@@ -80,7 +80,7 @@ def check_answer(choice):
             button.config(state="disabled")
 
         # Schedule the next question after a delay
-        root.after(1000, next_question_auto)
+        root.after(1, next_question_auto)
 
         # Disable the keyboard input during the cooldown
         root.unbind("<Key>")
